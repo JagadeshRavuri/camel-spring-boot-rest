@@ -1,25 +1,16 @@
 {
+  "definitions": {},
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Company",
-  "description": "a company",
   "type": "object",
+  "required": [
+    "name"
+  ],
   "properties": {
     "name": {
-      "description": "Name of the company",
       "type": "string"
     },
     "amount": {
-      "type": "number",
-      "minimum": 0,
-      "exclusiveMinimum": true
-    },
-    "info": {
-      "description": "info of the company",
-      "type": "string"
+      "type": "number"
     }
-  },
-  "required": [
-    "name",
-    "amount"
-  ]
+  }
 }

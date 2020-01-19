@@ -42,6 +42,7 @@ public class VATControllerIT {
     @Test
     public void shouldReturnHTTP201_whenValidJsonRequest() throws Exception {
 
+        // String validJsonRequest = "{\"amount\":10,\"name\":\"aCompany\",\"info\":\"company information\"}";
         String validJsonRequest = "{\"amount\":10,\"name\":\"aCompany\",\"info\":\"company information\"}";
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/vat")

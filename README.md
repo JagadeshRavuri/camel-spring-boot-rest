@@ -1,7 +1,9 @@
 # camel-spring-boot-rest
-* This is an application to create a Sample REST API using Camel and Spring Boot for below requirements.
+* This is an application to create a Sample REST API using Camel and Spring Boot. for below requirements.
+This dockerized implementation provides RESTful API and apache camel routes for validation against json schema and
+integrates message from backend service.
 
-# Requirements
+# Requirements:
 * Expose a Restful Service
 * HTTP verb as POST and Media Type can be JSON or XML
 * Define/Create a front end and backend schema’s (JSON or XML Schema’s) – A simple schema should be sufficient.
@@ -21,9 +23,12 @@ To start, run on commandline:
 `mvn spring-boot:run`
 
 To start, run on Docker:
+* From root of git checkout `mvn package`
 * docker build -t camel-spring-boot-rest .
-* docker push
+* To push to any other registry other than local refer `docker push`
 * docker run -p 8080:8080 -t camel-spring-boot-rest:latest
+* to stop container, `docker ps`
+* docker stop `containerid from above step`
 
 ### Pre-requisites
 Install JDK8

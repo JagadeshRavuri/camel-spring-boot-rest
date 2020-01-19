@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import static com.test.camelspringbootrest.route.Route.VALIDATE_ROUTE_URI;
 import static com.test.camelspringbootrest.route.Route.VAT_ROUTE_URI;
 
 
@@ -26,20 +26,22 @@ public class VATController {
     private static final Logger LOGGER = LoggerFactory.getLogger(VATController.class);
 
     @Autowired
-    private ProducerTemplate producer;
+    private ProducerTemplate producerTemplate;
 
     @Autowired
     private CamelContext camelContext;
 
     @PostMapping(path = "/vat", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Company> processVAT(final HttpServletRequest request, @Valid @RequestBody Company company) {
+    public ResponseEntity<Company> processVAT(@Valid @RequestBody Company company) {
 
-        LOGGER.info("processing VAT");
+        LOGGER.info("routing request to JsonValidateRoute to validate with json schema");
+        producerTemplate.sendBody(VALIDATE_ROUTE_URI.value, company);
 
+        LOGGER.info("routing request to VATRoute for processing VAT using backend mock service");
         final Exchange requestExchange = ExchangeBuilder.anExchange(camelContext).withBody(company).build();
 
-        final Exchange responseExchange = producer.send(VAT_ROUTE_URI.value, requestExchange);
+        final Exchange responseExchange = producerTemplate.send(VAT_ROUTE_URI.value, requestExchange);
 
         final Company responseBody = responseExchange.getIn().getBody(Company.class);
 

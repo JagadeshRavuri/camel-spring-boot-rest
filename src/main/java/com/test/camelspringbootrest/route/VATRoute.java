@@ -25,7 +25,6 @@ class VATRoute extends RouteBuilder {
                 .tracing()
                 .log("amount: ${body.amount}")
                 .log("name: ${body.name}")
-                //  .transform().simple("blue ${in.body.name}")
                 .process(new Processor() {
                     public void process(Exchange exchange) throws Exception {
                         Company bodyIn = (Company) exchange.getIn().getBody();
@@ -33,11 +32,8 @@ class VATRoute extends RouteBuilder {
                         Company company = vatService.includeVAT(bodyIn);
 
                         exchange.getIn().setBody(company);
-
                     }
                 }).log(">>> processed")
-                //  .marshal().json(JsonLibrary.Jackson)
-                // .to("json-validator:vat_policy_standard.json")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201));
     }
 
